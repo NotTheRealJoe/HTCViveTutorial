@@ -27,46 +27,31 @@ public class LaserPointer : MonoBehaviour {
                 hitPoint = hit.point;
                 ShowLaser(hit);
             }
-        }
-        else {
+        } else {
             laser.SetActive(false);
         }
-        // 1
-        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-        {
+
+        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) {
             RaycastHit hit;
 
-            // 2
-            if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100))
-            {
+            if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100)) {
                 hitPoint = hit.point;
                 ShowLaser(hit);
             }
-        }
-        else // 3
-        {
+        } else {
             laser.SetActive(false);
         }
     }
 
-    private void ShowLaser(RaycastHit hit)
-    {
-        // 1
+    private void ShowLaser(RaycastHit hit) {
         laser.SetActive(true);
-        // 2
         laserTransform.position = Vector3.Lerp(trackedObj.transform.position, hitPoint, .5f);
-        // 3
         laserTransform.LookAt(hitPoint);
-        // 4
-        laserTransform.localScale = new Vector3(laserTransform.localScale.x, laserTransform.localScale.y,
-            hit.distance);
+        laserTransform.localScale = new Vector3(laserTransform.localScale.x, laserTransform.localScale.y, hit.distance);
     }
 
-    void Start()
-    {
-        // 1
+    void Start() {
         laser = Instantiate(laserPrefab);
-        // 2
         laserTransform = laser.transform;
     }
 }
